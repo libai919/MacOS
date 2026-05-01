@@ -1,0 +1,22 @@
+name: MyProject
+options:
+  bundleIdPrefix: com.example
+targets:
+  MyApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: MyApp    
+    info:
+      path: MyApp/Info.plist    
+    settings:
+      base:
+        CODE_SIGNING_ALLOWED: NO
+        CODE_SIGNING_REQUIRED: NO
+        CODE_SIGN_IDENTITY: ""
+        PROVISIONING_PROFILE_SPECIFIER: ""
+        AD_HOC_CODE_SIGNING_ALLOWED: YES        
+        SWIFT_VERSION: "5.9"
+        INFOPLIST_FILE: MyApp/Info.plist
+        GENERATE_INFOPLIST_FILE: NO

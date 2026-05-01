@@ -1,0 +1,34 @@
+name: MacOS
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: shell  
+    runs-on: macos-latest
+    steps:
+      - name: import files to MacOS
+        uses: actions/checkout@v4
+      - name: debug 
+        run: |
+          brew install xcodegen
+          xcodegen generate   
+          xcodebuild archive \
+            -project MyProject.xcodeproj \
+            -scheme MyApp \
+            -configuration Release \
+            -archivePath ./build/MyApp.xcarchive \
+            -sdk iphoneos \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY=""
+          mkdir -p Payload
+          cp -r ./build/MyApp.xcarchive/Products/Applications/MyApp.app Payload/
+          zip -r MyApp_unsigned.ipa Payload
+      - name: Upload IPA as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyApp_unsigned
+          path: ios-ipa-project/MyApp_unsigned.ipa
+          retention-days: 1
